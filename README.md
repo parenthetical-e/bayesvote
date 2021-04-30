@@ -2,11 +2,11 @@
 A general purpose bayesian decoding library, for time series.
 
 # details
-The underlying algoritm is based on ideas from a neuroscience paper,
+The underlying algorithm is based on ideas from a neuroscience paper,
 
 > Insanally, M. N. et al. Spike-timing-dependent ensemble encoding by non-classically responsive cortical neurons. eLife 8, (2019).
 
-We put their ideas to use, now with a more general focus. The idea is still very simple. In short to train we,
+We put these same ideaa to use, just now with a more general focus. The big idea is still very simple. In short to train we,
 
 1. build a kernel probability dist, 
 2. tune its bandwidth by CV, 
