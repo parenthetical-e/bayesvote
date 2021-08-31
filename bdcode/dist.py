@@ -8,7 +8,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
 
 
-class TargetDensity:
+class ConditionalKernelDensity:
     """Extends KernelDensity, creating target distributions."""
     def __init__(self, **kd_kwargs):
         self.kd_kwargs = kd_kwargs
@@ -32,8 +32,12 @@ class TargetDensity:
         return X
 
     def fit(self, X, y, cv_kwargs=None):
+        # Sanity
         X = self._check(X, y)
+        # Init meta
         self.targets, self.channels = self._parse(X, y)
+        self.num_targets = len(self.targets)
+        self.num_channels = len(self.channels)
 
         # Fit, save in lookup
         self._lookup = dict()
@@ -72,10 +76,3 @@ class TargetDensity:
 
     def probs(self, X, y):
         return np.exp(self.score_samples(X, y))
-
-    def bayesian_decode(self, X):
-        # HERE
-        # Iterate over channels
-        # Trying all fit targets
-        # iterating bayes rules
-        pass
