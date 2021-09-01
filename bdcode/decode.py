@@ -3,7 +3,23 @@ from copy import deepcopy
 
 
 def bayesian_decoder(X, y, prior, kde):
-    """Decode X, given a prior, and a dist"""
+    """Decode X, given classes y.
+    
+    Parameters
+    ----------
+    X: array-like of shape (n_samples, n_features)
+        List of n_features-dimensional data points. Each row corresponds to
+        a single data point.
+
+    y : array-like of shape (n_samples,)
+        Target values (class labels)
+
+    Returns
+    -------
+    X : array-like of shape (n_samples, n_classes)
+        List of n_classes-dimensional data points. Each row corresponds to
+        a single bayes probability.
+    """
 
     # Sanity check kde.channels and kde.targets against
     # X and y
