@@ -1,5 +1,5 @@
 # bayesvote
-A general purpose bayesian decoding library, for time series.
+A simple democratic way to decode classes using bayes rule.
 
 # details
 The underlying algorithm is based on ideas from a neuroscience paper,
@@ -12,7 +12,7 @@ To train the decoder we,
 
 1. build a kernel probability dist, 
 2. tune its bandwidth by CV, 
-3. use the result to do a sequential bayesian decode. 
+3. use the result to do a sequential bayesian decode, where each channels dist gets a 'vote'. 
 
 To test, this scheme gets repeated, minus tuning, for rolling time windows.
 
