@@ -35,7 +35,7 @@ def decoder(X, y, prior, kde):
     X_decode = np.zeros((y.shape[0] + 1, kde.num_targets))
     X_decode[0, :] = prior
 
-    # TODO - Build up indep trace tensor to norm the Bayes updates
+    # Build up indep trace tensor to renorm the updates
     X_like = np.zeros((y.shape[0], kde.num_channels, kde.num_targets))
     for j, c in enumerate(kde.channels):
         for k, t in enumerate(kde.targets):
@@ -55,8 +55,7 @@ def decoder(X, y, prior, kde):
             for j, c in enumerate(kde.channels):
                 p = X_like[i, j, :]  # likelihood
                 p_new = (p * p_old)  # update
-                p_new /= np.sum(p_new)
-
+                p_new /= np.sum(p_new)  # renorm
                 p_old = deepcopy(p_new)  # shift
 
             # Update bayesian decode trace *after*
