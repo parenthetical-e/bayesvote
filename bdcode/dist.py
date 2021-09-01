@@ -10,7 +10,11 @@ from sklearn.model_selection import RandomizedSearchCV
 
 class ConditionalKernelDensity:
     """Extends KernelDensity, creating conditional distributions
-    on y."""
+    on y.
+    
+    For details on kd_kwargs see,
+    https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KernelDensity.html
+    """
     def __init__(self, **kd_kwargs):
         self.kd_kwargs = kd_kwargs
         self._lookup = dict()
@@ -33,6 +37,22 @@ class ConditionalKernelDensity:
         return X
 
     def fit(self, X, y, cv_kwargs=None):
+        """Fit the Kernel Density model on the data.
+        
+        Parameters
+        ----------
+        X: array-like of shape (n_samples, n_features)
+            List of n_features-dimensional data points. Each row corresponds to
+            a single data point.
+
+        y : array-like of shape (n_samples,)
+            Target values (class labels)
+        
+        Returns
+        -------
+        self: object
+            Returns instance of object.
+        """
         # Sanity
         X = self._check(X, y)
         # Init meta
@@ -60,6 +80,20 @@ class ConditionalKernelDensity:
             self._lookup[(t, c)] = deepcopy(kde)
 
     def score_samples(self, X, y):
+        """Evaluate the log density model on the data.
+
+        Parameters
+        ----------
+        X: array-like of shape (n_samples, n_features)
+            An array of points to query. Last dimension should match dimension
+            of training data (n_features).
+
+        Returns
+        ------
+        density: ndarray of shape (n_samples,)
+            The array of log(density) evaluations. These are normalized to be
+            probability densities.
+        """
         X = self._check(X, y)
         X_score = np.zeros_like(X)
 
@@ -74,6 +108,3 @@ class ConditionalKernelDensity:
             X_score[mask, c] = scores
 
         return X_score
-
-    def probs(self, X, y):
-        return np.exp(self.score_samples(X, y))
