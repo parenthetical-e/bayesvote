@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 
 
-def bayesian_decoder(X, y, prior, kde):
+def decoder(X, y, prior, kde):
     """Decode X, given classes y.
     
     Parameters
@@ -13,6 +13,12 @@ def bayesian_decoder(X, y, prior, kde):
 
     y : array-like of shape (n_samples,)
         Target values (class labels)
+
+    prior : scalar (0-1)
+        The prior
+    
+    kde: a KernelDensity-like object
+        An instance of the ConditionalKernelDensity, or derivative
 
     Returns
     -------

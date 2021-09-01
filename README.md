@@ -1,4 +1,4 @@
-# bdcode
+# bayesvote
 A general purpose bayesian decoding library, for time series.
 
 # details
