@@ -17,7 +17,8 @@ def bayesian_decoder(X, y, prior, kde):
     X_like = np.zeros((y.shape[0], kde.num_channels, kde.num_targets))
     for j, c in enumerate(kde.channels):
         for k, t in enumerate(kde.targets):
-            X_like[:, j, k] = np.exp(kde._lookup[(t, c)].score_samples(X))
+            X_c = X[:, c].reshape(-1, 1)
+            X_like[:, j, k] = np.exp(kde._lookup[(t, c)].score_samples(X_c))
 
     # !
     # Sequential bayes estimates for each target
