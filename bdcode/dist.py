@@ -9,7 +9,8 @@ from sklearn.model_selection import RandomizedSearchCV
 
 
 class ConditionalKernelDensity:
-    """Extends KernelDensity, creating target distributions."""
+    """Extends KernelDensity, creating conditional distributions
+    on y."""
     def __init__(self, **kd_kwargs):
         self.kd_kwargs = kd_kwargs
         self._lookup = dict()
