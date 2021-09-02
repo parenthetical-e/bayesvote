@@ -43,7 +43,7 @@ class ConditionalKernelDensity:
         ----------
         X: array-like of shape (n_samples, n_features)
             List of n_features-dimensional data points. Each row corresponds to
-            a single data point.
+            a single data point. Note: nan/inf values are quietly dropped before density construction.
 
         y : array-like of shape (n_samples,)
             Target values (class labels)
@@ -64,8 +64,9 @@ class ConditionalKernelDensity:
         self._lookup = dict()
         for c, t in product(self.channels, self.targets):
             # Select
-            mask = t == y
-            X_filt = X[mask, c].reshape(np.sum(mask), 1)  # force 2d
+            x_filt = X[t == y, c]  # Select
+            x_filt = x_filt[np.isfinite(x_filt)]  # Drop nan, etc
+            X_filt = x_filt.reshape(x_filt.shape[0], 1)  # force 2d
 
             # Tune?
             if cv_kwargs is not None:
